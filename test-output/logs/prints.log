@@ -1,0 +1,8 @@
+15:46:46.836 [main] INFO  Find all pets by status for a category - 
+
+15:46:46.837 [main] INFO  Find all pets by status for a category - ************ Scenario execution started *****************
+15:46:50.014 [main] INFO  Find all pets by status for a category - ************ Scenario execution completed *****************
+15:46:50.021 [main] INFO  Attempt to find pets with invalid status - 
+
+15:46:50.021 [main] INFO  Attempt to find pets with invalid status - ************ Scenario execution started *****************
+15:46:51.352 [main] INFO  Attempt to find pets with invalid status - ************ Scenario execution completed *****************

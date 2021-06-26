@@ -15,6 +15,8 @@ public class Hooks extends BaseClass {
         //Initialize log and reports
         log = LogManager.getLogger(sc.getName());
         test = extent.createTest(sc.getName());
+        log.info("\r\n");
+        log.info("************ Scenario execution started *****************");
     }
 
 
@@ -22,7 +24,8 @@ public class Hooks extends BaseClass {
     public void afterScenario(Scenario sc) throws IOException {
         //Take a screenshot if scenario fails and attach it to the report
         if (sc.isFailed()) {
-            test.fail("Scenario '" + sc.getName() + "' failed!!");
+            log.error("Scenario '" + sc.getName() + "' failed!!");
         }
+        log.info("************ Scenario execution completed *****************");
     }
 }

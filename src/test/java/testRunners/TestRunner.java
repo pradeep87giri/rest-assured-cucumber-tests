@@ -1,10 +1,10 @@
 package testRunners;
 
 import base.BaseClass;
-import com.aventstack.extentreports.ExtentReports;
-import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
 import io.cucumber.junit.Cucumber;
 import io.cucumber.junit.CucumberOptions;
+import managers.PropertyManager;
+import managers.ReportManager;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
@@ -17,22 +17,23 @@ import org.junit.runner.RunWith;
 )
 
 
-public class TestRunner extends BaseClass {
+public class TestRunner {
+
+    static PropertyManager propertyManager = new PropertyManager();
+    static ReportManager reportManager = new ReportManager();
 
     @BeforeClass
     public static void before_class() {
-        //Load property file
-        loadPropFile();
-
-        //Initialize extent report
-        htmlReporter = new ExtentHtmlReporter(getProperty("reportConfigPath"));
-        extent = new ExtentReports();
-        extent.attachReporter(htmlReporter);
+        //Get report path and Initialize report
+        propertyManager.loadPropFile();
+        String reportPath = propertyManager.getProperty("reportConfigPath");
+        reportManager.initializeReport(reportPath);
     }
 
     @AfterClass
     public static void after_class() {
-        extent.flush();
+        //Finalize report
+        reportManager.flush();
     }
 }
 
