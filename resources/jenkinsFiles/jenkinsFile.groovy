@@ -55,7 +55,7 @@ pipeline {
                     "<p>Check <strong>console</strong> output at ${BUILD_URL}console.<BR></p>" +
                     "Best regards,<BR><BR> Pradeep Giri",
                     subject: "${JOB_NAME} - Build # ${BUILD_NUMBER} - " + currentBuild.currentResult + "!",
-                    to: "pradeep87giri@gmail.com",
+                    to: "someone@wooga.com",
                     mimeType: "text/html"
         }
     }
