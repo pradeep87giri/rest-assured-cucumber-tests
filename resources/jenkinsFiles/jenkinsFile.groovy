@@ -43,22 +43,20 @@ pipeline {
                         reportTitles         : 'Pet Store Report'])
             }
         }
+    }
 
-
-        //Below step can be used to email the result
-        stage("Emailing the result") {
-            steps {
-                echo 'Emailing status'
-                emailext body: "Kindly find below the results of the automated tests executed. <BR>" +
-                        "<BR><ul>Job: <strong>${JOB_NAME}</strong></ul>" +
-                        "<ul>Build: <strong>${BUILD_NUMBER}</strong></ul>" +
-                        "<ul>Status: <strong>" + currentBuild.currentResult + "</strong></ul><BR>" +
-                        "<p>Check <strong>console</strong> output at ${BUILD_URL}console.<BR></p>" +
-                        "Best regards,<BR><BR> Pradeep Giri",
-                        subject: "${JOB_NAME} - Build # ${BUILD_NUMBER} - " + currentBuild.currentResult + "!",
-                        recipientProviders: 'pradeep1987giri@gmail.com',
-                        mimeType: "text/html"
-            }
+    //Below step can be used to email the result
+    post {
+        always {
+            emailext body: "Kindly find below the results of the automated tests executed. <BR>" +
+                    "<BR><ul>Job: <strong>${JOB_NAME}</strong></ul>" +
+                    "<ul>Build: <strong>${BUILD_NUMBER}</strong></ul>" +
+                    "<ul>Status: <strong>" + currentBuild.currentResult + "</strong></ul><BR>" +
+                    "<p>Check <strong>console</strong> output at ${BUILD_URL}console.<BR></p>" +
+                    "Best regards,<BR><BR> Pradeep Giri",
+                    subject: "${JOB_NAME} - Build # ${BUILD_NUMBER} - " + currentBuild.currentResult + "!",
+                    recipientProviders: "pradeep1987giri@gmail.com",
+                    mimeType: "text/html"
         }
     }
 }
