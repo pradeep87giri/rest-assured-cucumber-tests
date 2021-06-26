@@ -46,9 +46,9 @@ pipeline {
 
 
         //Below step can be used to email the result
-/*        stage("Emailing the result") {
+        stage("Emailing the result") {
             steps {
-                echo 'Emailing report '
+                echo 'Emailing status'
                 emailext body: "Kindly find below the results of the automated tests executed. <BR>" +
                         "<BR><ul>Job: <strong>${JOB_NAME}</strong></ul>" +
                         "<ul>Build: <strong>${BUILD_NUMBER}</strong></ul>" +
@@ -59,6 +59,6 @@ pipeline {
                         recipientProviders: 'pradeep1987giri@gmail.com',
                         mimeType: "text/html"
             }
-        }*/
+        }
     }
 }
