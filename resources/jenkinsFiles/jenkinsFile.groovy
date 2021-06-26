@@ -4,9 +4,9 @@
 def gitRepo = 'https://github.com/pradeep87giri/petStore.git'
 def gitBranch = 'master'
 
-
 //Pipeline
 pipeline {
+
     agent any
 
     stages {
@@ -55,7 +55,7 @@ pipeline {
                     "<p>Check <strong>console</strong> output at ${BUILD_URL}console.<BR></p>" +
                     "Best regards,<BR><BR> Pradeep Giri",
                     subject: "${JOB_NAME} - Build # ${BUILD_NUMBER} - " + currentBuild.currentResult + "!",
-                    recipientProviders: "pradeep1987giri@gmail.com",
+                    to: "pradeep87giri@gmail.com",
                     mimeType: "text/html"
         }
     }
