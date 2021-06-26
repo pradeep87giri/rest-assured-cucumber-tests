@@ -18,6 +18,8 @@ Feature: Retrieve pets by status
     Examples:
       | path              | status    | category | expectedResponseTime |
       | /pet/findByStatus | available | Lions    | 3000                 |
+      | /pet/findByStatus | pending   | Lions    | 3000                 |
+      | /pet/findByStatus | sold      | Dogs     | 3000                 |
 
 
   Scenario Outline: Attempt to find pets with invalid status
@@ -33,3 +35,27 @@ Feature: Retrieve pets by status
     Examples:
       | path              | status       |
       | /pet/findByStatus | notAvailable |
+      | /pet/findByStatus |              |
+
+
+  Scenario Outline: Attempt to find pets without status
+    When I set the path to "<path>"
+    And I set the method to GET
+    And I execute the request
+    Then The status code is "400"
+    And I verify the error msg on not providing status
+
+    Examples:
+      | path              |
+      | /pet/findByStatus |
+
+
+  Scenario Outline: Attempt to find pets with invalid path
+    When I set the path to "<path>"
+    And I set the method to GET
+    And I execute the request
+    Then The status code is "404"
+
+    Examples:
+      | path             |
+      | /pet/findByStyle |

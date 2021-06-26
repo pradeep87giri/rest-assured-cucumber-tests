@@ -1,6 +1,5 @@
 package testRunners;
 
-import base.BaseClass;
 import io.cucumber.junit.Cucumber;
 import io.cucumber.junit.CucumberOptions;
 import managers.PropertyManager;
@@ -17,7 +16,7 @@ import org.junit.runner.RunWith;
 )
 
 
-public class TestRunner {
+public class RunCucumberTest {
 
     static PropertyManager propertyManager = new PropertyManager();
     static ReportManager reportManager = new ReportManager();

@@ -8,7 +8,6 @@
     <packaging>jar</packaging>
     <version>1.0-SNAPSHOT</version>
     <name>petStore</name>
-    <!--    <url>http://maven.apache.org</url>-->
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
@@ -42,13 +41,6 @@
             <groupId>io.cucumber</groupId>
             <artifactId>cucumber-junit</artifactId>
             <version>6.10.3</version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>io.rest-assured</groupId>
-            <artifactId>rest-assured</artifactId>
-            <version>4.3.3</version>
             <scope>test</scope>
         </dependency>
 
@@ -101,13 +93,13 @@
             <version>2.0.0-alpha1</version>
             <scope>test</scope>
         </dependency>
+
         <dependency>
             <groupId>io.rest-assured</groupId>
             <artifactId>rest-assured</artifactId>
             <version>4.3.3</version>
             <scope>compile</scope>
         </dependency>
-
 
     </dependencies>
 
