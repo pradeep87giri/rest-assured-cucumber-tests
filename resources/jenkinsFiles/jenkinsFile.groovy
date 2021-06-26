@@ -9,11 +9,6 @@ def gitBranch = 'master'
 pipeline {
     agent any
 
-    tools {
-        jdk 'jdk1.8'
-        maven 'mvn3.8.1'
-    }
-
     stages {
         stage('Get the Git repo') {
             steps {
@@ -37,14 +32,16 @@ pipeline {
         }
 
         stage('Publish report') {
-            publishHTML(target: [
-                    allowMissing         : false,
-                    alwaysLinkToLastBuild: true,
-                    keepAll              : true,
-                    reportDir            : 'test-output\\reports',
-                    reportFiles          : 'extent-report.html',
-                    reportName           : "Pet Store Report",
-                    reportTitles         : 'Pet Store Report'])
+            steps {
+                publishHTML(target: [
+                        allowMissing         : false,
+                        alwaysLinkToLastBuild: true,
+                        keepAll              : true,
+                        reportDir            : 'test-output\\reports',
+                        reportFiles          : 'extent-report.html',
+                        reportName           : "Pet Store Report",
+                        reportTitles         : 'Pet Store Report'])
+            }
         }
 
 
