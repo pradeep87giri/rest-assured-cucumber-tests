@@ -8,11 +8,24 @@ def gitBranch = 'master'
 //Pipeline
 pipeline {
     agent any
+
+    tools {
+        jdk 'jdk1.8'
+        maven 'mvn3.8.1'
+    }
+
     stages {
         stage('Get the Git repo') {
             steps {
-                echo 'Downloading the tes   t automation code'
+                echo 'Downloading the test automation code'
                 git branch: gitBranch, url: gitRepo
+            }
+        }
+
+        stage('Maven version') {
+            steps {
+                echo "Hello, Maven"
+                sh "mvn --version"
             }
         }
 
@@ -22,6 +35,20 @@ pipeline {
                 sh "mvn clean test"
             }
         }
+
+        stage('Publish report') {
+            script {
+                publishHTML(target: [
+                        allowMissing         : false,
+                        alwaysLinkToLastBuild: true,
+                        keepAll              : true,
+                        reportDir            : 'test-output\\reports',
+                        reportFiles          : 'extent-report.html',
+                        reportName           : "Pet Store Report",
+                        reportTitles         : 'Pet Store Report'])
+            }
+        }
+
 
         //Below step can be used to email the result
 /*        stage("Emailing the result") {
