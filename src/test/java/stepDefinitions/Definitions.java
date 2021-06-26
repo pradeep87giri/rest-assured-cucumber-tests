@@ -58,7 +58,6 @@ public class Definitions extends BaseClass {
     public void executeRequest() {
         res = setRequestSteps.executeRequest(requestSpec, operation, resourcePath);
         test.info("I execute the request");
-        System.out.println("Response body: " + res.getBody().asString());
     }
 
     @Then("^The status code is \"(.*)\"$")
@@ -68,7 +67,7 @@ public class Definitions extends BaseClass {
             test.pass("The status code is " + res.getStatusCode());
         } else {
             test.fail("The status code is not " + res.getStatusCode());
-            Assert.fail();
+            Assert.fail("The status code is not " + res.getStatusCode());
         }
     }
 
@@ -81,7 +80,7 @@ public class Definitions extends BaseClass {
             test.pass("The response time is less than " + responseTime + " ms");
         } else {
             test.fail("The response time is greater than " + responseTime + " ms");
-            Assert.fail();
+            Assert.fail("The response time is greater than " + responseTime + " ms");
         }
     }
 
@@ -123,8 +122,20 @@ public class Definitions extends BaseClass {
         if (actualErrorMsg.equals(expectedErrorMsg)) {
             test.pass("I verify the error msg for invalid status is as expected");
         } else {
-            test.fail("I validate the error msg for invalid status is not as expected");
-            Assert.fail();
+            test.fail("I verify the error msg for invalid status is not as expected");
+            Assert.fail("I verify the error msg for invalid status is not as expected");
+        }
+    }
+
+    @And("I verify the error msg on not providing status")
+    public void validateWithoutStatusError() {
+        String actualErrorMsg = res.getBody().asString();
+        String expectedErrorMsg = "No status provided. Try again?";
+        if (actualErrorMsg.equals(expectedErrorMsg)) {
+            test.pass("I verify the error msg is as expected when no status is provided");
+        } else {
+            test.fail("I verify the error msg is not as expected when no status is provided");
+            Assert.fail("I verify the error msg is not as expected when no status is provided");
         }
     }
 }
