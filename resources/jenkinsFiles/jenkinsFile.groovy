@@ -37,16 +37,14 @@ pipeline {
         }
 
         stage('Publish report') {
-            script {
-                publishHTML(target: [
-                        allowMissing         : false,
-                        alwaysLinkToLastBuild: true,
-                        keepAll              : true,
-                        reportDir            : 'test-output\\reports',
-                        reportFiles          : 'extent-report.html',
-                        reportName           : "Pet Store Report",
-                        reportTitles         : 'Pet Store Report'])
-            }
+            publishHTML(target: [
+                    allowMissing         : false,
+                    alwaysLinkToLastBuild: true,
+                    keepAll              : true,
+                    reportDir            : 'test-output\\reports',
+                    reportFiles          : 'extent-report.html',
+                    reportName           : "Pet Store Report",
+                    reportTitles         : 'Pet Store Report'])
         }
 
 
