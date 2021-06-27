@@ -1,10 +1,2 @@
-20:08:44.309 [main] INFO  Attempt to find pets with invalid status - ************ Scenario execution completed *****************
-20:08:44.325 [main] INFO  Attempt to find pets without status - 
-
-20:08:44.326 [main] INFO  Attempt to find pets without status - ************ Scenario execution started *****************
-20:08:45.834 [main] INFO  Attempt to find pets without status - ************ Scenario execution completed *****************
-20:08:45.841 [main] INFO  Attempt to find pets with invalid path - 
-
-20:08:45.842 [main] INFO  Attempt to find pets with invalid path - ************ Scenario execution started *****************
-20:08:47.473 [main] ERROR Attempt to find pets with invalid path - Scenario 'Attempt to find pets with invalid path' failed!!
-20:08:47.477 [main] INFO  Attempt to find pets with invalid path - ************ Scenario execution completed *****************
+19:33:16.377 [main] ERROR Attempt to find pets with invalid path - Scenario 'Attempt to find pets with invalid path' failed!!
+19:33:16.395 [main] INFO  Attempt to find pets with invalid path - ************ Scenario execution completed *****************

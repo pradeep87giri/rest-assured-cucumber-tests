@@ -6,10 +6,10 @@ def gitBranch = 'master'
 
 //Pipeline
 pipeline {
-
     agent any
 
     stages {
+        //Clone automation framework from github
         stage('Get the Git repo') {
             steps {
                 echo 'Downloading the test automation code'
@@ -17,6 +17,7 @@ pipeline {
             }
         }
 
+        //Check if maven is installed
         stage('Maven version') {
             steps {
                 echo "Hello, Maven"
@@ -24,6 +25,7 @@ pipeline {
             }
         }
 
+        //Execute automation test cases
         stage('Execute tests') {
             steps {
                 echo 'Executing tests'
@@ -31,6 +33,7 @@ pipeline {
             }
         }
 
+        //Publish report in jenkins job
         stage('Publish report') {
             steps {
                 publishHTML(target: [

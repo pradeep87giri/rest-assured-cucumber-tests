@@ -1,86 +1,117 @@
-# Wooga - QA Challenge
+# Pet Store
 
-This project is to perform actions and verify google map functionalities. The project is created in such a way that
-every scenario is independent and browser will get closed after each execution. It uses following technology stack:
+This project is to test Pet Store API through automation framework. Every scenario in this project can be run
+independently.
 
-- Selenium
-- Cucumber BDD Framework
-- Java
-- Maven
-- Jenkins
-- log4j2
+## Tools & Libraries
 
-### _Note_
-
-_Since test cases are developed on google map with english language, all the error msgs are also verified in english
-language only. To make test cases compatible with other languages, google map's language is first changed to english
-before executing each test case. Though this can be changed in next version, by creating a translator utility class_
+- Rest-Assured: - Java library for Api Testing
+- Cucumber-JVM:- BDD Framework
+- JAVA: - Programming language
+- Maven: - Build tool
+- Jenkins: - Continuous Integration
+- Git: - Version Control
+- Github: - Git repository hosted server
+- Intellij Or Eclipse: - Integrated Development Environment
+- Log4j2: - Simple Logging Utility for Java
+- Extent Reports - Reporting library for Java
 
 ## Getting Started
 
 - ### Prerequisites
     - Java 8 and maven should be installed
     - Java and Maven Paths should be configured
-    - Jenkins and Jenkins-cli(optional)
+    - Git
+    - Jenkins with Pipeline and HTML publisher plugin
+
+- ### Repository
+  Github repo url: https://github.com/pradeep87giri/petStore.git
 
 - ### Navigation
+  ![Framework_Structure.png](resources/Framework_Structure.png)
 
-![img.png](img.png)
+1. **jenkinsFile.groovy** ->  Jenkine file for pipeline jobs for CI integration. Path:
+   resources/jenkinsFiles/jenkinsFile.groovy
+2. **base** -> Base class containing references of log, config, report and request objects
+3. **managers** ->
+    - PropertyManager: Contains functions to load and read config properties
+    - ReportManager: Contains functions to initialize and flush extent reports
+4. **utilities** -> Reusable utilities which can be used in other projects
+    - AssertSteps: Contains functions to validate response
+    - SetRequestSteps: Contains functions to form an API request
+5. **resoucres** ->
+    - config.properties: Configuration file
+    - log4j2.xml: Configuration file for logging
+6. **stepDefinitions** ->
+    - Definitions: Every step defined in Feature file needs to be implemented in Definitions Class. Example:
+      ```
+      @Given("^I set the URI to base url$")
+      public void setBaseURL() {
+      String baseUri = props.getProperty("baseUrl");
+      setRequestSteps.setBaseUri(requestSpec, baseUri);
+      }
+    - Hooks: Contains functions which run before and after every test case. This helps in logging and reporting of all
+      test cases
+7. **testRunner** -> Junit class used for running the execution. This file also glues and features and definitions.
+   Example:
+   ```
+   @RunWith(Cucumber.class)
+   @CucumberOptions(
+   features = {"src/test/resources/features"},
+   plugin = {"pretty", "html:target/cucumber-reports", "json:target/cucumber.json"},
+   glue = {"stepDefinitions"}
+   )
+8. **features** -> Feature files with cucumber steps in gherkin language. These files contain all the test cases of
+   various scenarios. Example:
+    ```
+    Scenario Outline: Attempt to find pets without status
+    When I set the path to "<path>"
+    And I set the method to GET
+    And I execute the request
+    Then The status code is "400"
+    And I verify the error msg on not providing status
 
-1. woogachallenge.xml ->  To import Jenkins job
-2. base -> Base class which is inherited by other classes
-3. managers -> Driver manager class with singleton pattern so that only one instance of webdriver instance gets
-   instantiated. PageObjectManager class to create page object such that if there are multiple scenarios, only one
-   instance of page object gets created
-4. pageObjects -> PageObjectManager class with page object pattern, it has one class for each page with page objects and
-   method
-5. utilities -> Element and Wait utilities which can be used across projects
-6. config.properties -> configuration file
-7. log4j2.xml -> log4j configuration file
-8. stepDefinitions -> Definitions contains implementation of cucumber steps
-9. hooks -> Contains functions which run before and after of each scenario
-10. testRunner -> Junit class used for running the execution
-11. features -> Feature files with cucumber steps in gherkin language. All the scenarios are mentioned here
-12. test-output:
-    - logs -> logs with execution steps
-    - reports -> extent report in html format with all cucumber steps, verifications and screenshots
-    - screenshots -> contains screenshots of all passed and failed scenarios
+    Examples:
+      | path              |
+      | /pet/findByStatus |
+9. **test-output** ->
+    - logs: Contains logs with timestamp for debugging
+    - reports: A new extent report in html format generates with each run. It contains all cucumber steps and
+      verifications
 
 ## Running the tests
 
-Go to src\main\test\testRunners folder and run TestRunner.java class. You can also use below maven command in terminal
-for execution:
+There are different ways to execute test cases:
 
- ```
- mvn clean test
- ```
+1. Go to src\main\test\testRunners folder and run TestRunner.java class.
+2. Run maven command in terminal: **mvn clean test**
+3. Create a jenkins pipeline job, use jekinsFile.groovy script in it and run the job.
 
 ## Reports
 
 - Extent reports can be found at test-output\reports folder in html format. The report has all the test cases under a
-  feature with test steps. The report also contains image of necessary steps which can be enlarged on clicking. Also,
-  whenever there is failure an image is captured and attached to make the debugging easy.
+  feature with test steps. It also shows validation points, number of test cases/steps and total execution time.
 
-![img_1.png](img_1.png)
+  ![Extent_Report.png](resources/Extent_Report.png)
 
-- Screenshots can be found at test-output\screenshots folder.
-- Logs of each step are captured in test-output\logs folder.
+- Logs of each step gets captured in test-output\logs folder.
 
-## Jenkins Integration
+## CI Integration
 
-Open woogachallenge.xml file under resources folder. Provide the complete path of pom.xml of this project from your
-directory in local machine in following line in the xml file
+Steps to integrate automation framework with Jenkins:
 
- ```
-<rootPOM>D:\Projects\woogachallenge\pom.xml</rootPOM>
- ```
+- Create a new pipeline job on your Jenkins
+- Configure the job and click on Pipeline tab
+- Choose Git as SCM nad fill following info:
+    - Enter repository URL - https://github.com/pradeep87giri/petStore.git
+    - Branch Specifier: */master
+    - Script Path: resources/jenkinsFiles/jenkinsFile.groovy
 
-Install Jenkins-cli in Jenkins and run following command to import Jenkin job
+  ![Jenkins_Pipeline.png](resources/Jenkins_Pipeline.png)
 
- ```
-java -jar jenkins-cli.jar -s http://server auth username:password create-job wooga-challenge < woogachallenge.xml
- ```
+### _Note_
 
-A job with name wooga-challenge should get created. On running this job, test cases will be executed on the local
-machine.
+***Usually reseponse time is much greater than 200ms and may cause test cases failure. Also, last test case always fails
+because response status code is 400 instead of 404, which looks like a potential bug.***
+
 

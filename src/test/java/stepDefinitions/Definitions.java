@@ -33,17 +33,20 @@ public class Definitions extends BaseClass {
         test.info("I set the URI to base url: " + baseUri);
     }
 
+
     @When("^I set the path to \"(.*)\"$")
     public void setPath(String path) {
         resourcePath = path;
         test.info("I set the path to '" + path + "'");
     }
 
+
     @When("^I set the method to (get|GET|put|PUT|post|POST|delete|DELETE|PATCH|patch)$")
     public void setMethod(String method) {
         operation = method;
         test.info("I set the method to " + method);
     }
+
 
     @And("^I set the parameters with the below data$")
     public void setParams(DataTable dt) {
@@ -54,11 +57,13 @@ public class Definitions extends BaseClass {
         test.info("I set the parameters with data: " + listOfMaps);
     }
 
+
     @And("^I execute the request$")
     public void executeRequest() {
         res = setRequestSteps.executeRequest(requestSpec, operation, resourcePath);
         test.info("I execute the request");
     }
+
 
     @Then("^The status code is \"(.*)\"$")
     public void checkStatusCode(int statusCode) {
@@ -70,6 +75,7 @@ public class Definitions extends BaseClass {
             Assert.fail("The status code is not " + res.getStatusCode());
         }
     }
+
 
     @And("^The response time is less than \"(.*)\" ms$")
     public void checkResponseTime(long responseTime) {
@@ -83,6 +89,7 @@ public class Definitions extends BaseClass {
             Assert.fail("The response time is greater than " + responseTime + " ms");
         }
     }
+
 
     @And("^I retrieve all \"(.*)\" pets of category \"(.*)\"$")
     public void getPetsWithCategory(String status, String category) {
@@ -114,6 +121,7 @@ public class Definitions extends BaseClass {
         }
     }
 
+
     @And("^I verify the \"(.*)\" is invalid")
     public void validateInvalidStatusError(String status) {
         JsonPath jsonPath = res.jsonPath();
@@ -126,6 +134,7 @@ public class Definitions extends BaseClass {
             Assert.fail("I verify the error msg for invalid status is not as expected");
         }
     }
+
 
     @And("I verify the error msg on not providing status")
     public void validateWithoutStatusError() {
