@@ -1,4 +1,4 @@
-# Pet Store
+# Rest Assured Cucumber Framework
 
 This project is to test Pet Store API through automation framework. Every scenario in this project can be run
 independently.
